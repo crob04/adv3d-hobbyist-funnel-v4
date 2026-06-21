@@ -1,0 +1,41 @@
+{
+  "name": "adv3d-funnel-template",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify:env": "node ./node_modules/tsx/dist/cli.mjs ./scripts/check-required-env.ts",
+    "prepare:payload": "node ./node_modules/tsx/dist/cli.mjs ./scripts/prepare-payload.ts",
+    "cms:generate-importmap": "node ./node_modules/payload/dist/bin/index.js generate:importmap",
+    "cms:generate-types": "node ./node_modules/payload/dist/bin/index.js generate:types",
+    "seed:landing": "node ./node_modules/tsx/dist/cli.mjs ./scripts/seed-landing-page.ts",
+    "dev": "next dev",
+    "predev": "npm run prepare:payload",
+    "build": "next build",
+    "prebuild": "npm run prepare:payload",
+    "start": "next start",
+    "prestart": "npm run verify:env",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "^3.80.0",
+    "@payloadcms/next": "^3.80.0",
+    "next": "^15.4.11",
+    "payload": "^3.80.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.13.0",
+    "eslint-config-next": "^15.0.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "tsx": "^4.20.5",
+    "typescript": "^5.6.3"
+  }
+}
