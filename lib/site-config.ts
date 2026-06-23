@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
-  siteName: "Advanc3D",
-  funnelName: "Digital O&P Solutions",
-  audienceKey: "op_services",
-  productionSiteUrl: "https://opservices.advanc3dinc.com"
+  siteName: "Adv3D",
+  funnelName: "Hobbyist 3D Printing",
+  audienceKey: "hobbyist",
+  productionSiteUrl: "https://adv3d-hobbyist-funnel.vercel.app"
 } as const;

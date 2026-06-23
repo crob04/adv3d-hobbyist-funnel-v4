@@ -1,408 +1,442 @@
-"use client";
-
-import Image from "next/image";
-import { useEffect, useState } from "react";
-
-import { trackFaqExpand, trackPrimaryCtaClick, trackSecondaryCtaClick } from "@/lib/analytics";
-import type {
-  BenefitsSection,
-  DifferentiatorsSection,
-  FaqSection,
-  FooterCtaSection,
-  HeroSection,
-  ProblemSection,
-  ProofSection,
-  WorkflowSection
-} from "@/lib/types";
-
-const heroCarouselImages = [
-  {
-    src: "/products/nitro-front-hero.webp",
-    alt: "Nitro socket system product photography"
-  },
-  {
-    src: "/products/nitro-rear-detail.webp",
-    alt: "Nitro socket system detail view"
-  }
-];
-
-function LinkedText({ text }: { text?: string }) {
-  if (!text) {
-    return null;
-  }
-
-  const linkPattern = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
-  const parts: Array<string | { label: string; href: string }> = [];
-  let lastIndex = 0;
-  let match: RegExpExecArray | null;
-
-  while ((match = linkPattern.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(text.slice(lastIndex, match.index));
-    }
-    parts.push({ label: match[1], href: match[2] });
-    lastIndex = match.index + match[0].length;
-  }
-
-  if (lastIndex < text.length) {
-    parts.push(text.slice(lastIndex));
-  }
-
-  return (
-    <>
-      {parts.map((part, index) =>
-        typeof part === "string" ? (
-          part
-        ) : (
-          <a key={`${part.href}-${index}`} href={part.href} target="_blank" rel="noreferrer" className="content-link">
-            {part.label}
-          </a>
-        )
-      )}
-    </>
-  );
-}
+import type { LandingPage } from "@/lib/types";
+import { Button, Eyebrow, FaqEntry, ThemeToggle } from "./ui";
 
 function SectionShell({
-  children,
   id,
-  compact = false,
-  tone = "default"
+  className = "",
+  children
 }: {
-  children: React.ReactNode;
   id?: string;
-  compact?: boolean;
-  tone?: "default" | "muted" | "dark";
+  className?: string;
+  children: React.ReactNode;
 }) {
-  const shellClass = compact ? "section-shell section-shell--compact" : "section-shell";
-  const toneClass =
-    tone === "muted" ? "section-panel section-panel--muted" : tone === "dark" ? "section-panel section-panel--dark" : "";
-
   return (
-    <section id={id} className={shellClass}>
-      <div className={toneClass}>{children}</div>
+    <section
+      id={id}
+      className={`mx-auto w-full max-w-7xl px-6 md:px-10 ${className}`}
+    >
+      {children}
     </section>
   );
 }
 
-function SectionHeader({
-  eyebrow,
-  heading,
-  copy
-}: {
-  eyebrow?: string;
-  heading: string;
-  copy?: string;
-}) {
+function SiteHeader({ page }: { page: LandingPage }) {
   return (
-    <div className="max-w-3xl">
-      {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-      <h2 className="section-title">{heading}</h2>
-      {copy ? (
-        <div className="section-copy-group">
-          {copy.split(/\n{2,}/).map((paragraph) => (
-            <p key={paragraph} className="section-copy">
-              {paragraph}
-            </p>
+    <header className="sticky top-0 z-40 border-b border-brand-border bg-brand-bg/90 backdrop-blur">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-4 md:px-10">
+        <a
+          href="#top"
+          className="font-display text-lg font-semibold tracking-tight text-brand-text"
+        >
+          {page.businessName}
+        </a>
+        <nav aria-label="Primary" className="hidden gap-6 md:flex">
+          {page.navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-sm font-medium text-brand-text transition hover:text-brand-primary"
+            >
+              {item.label}
+            </a>
           ))}
+        </nav>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Button label={page.hero.primaryCta.label} href={page.hero.primaryCta.href} />
         </div>
-      ) : null}
-    </div>
+      </div>
+    </header>
   );
 }
 
-function CtaLink({
-  href,
-  label,
-  variant = "primary",
-  location,
-  isExternal = false,
-  className = ""
-}: {
-  href: string;
-  label: string;
-  variant?: "primary" | "secondary";
-  location: "hero" | "footer";
-  isExternal?: boolean;
-  className?: string;
-}) {
-  const buttonClassName = variant === "secondary" ? "pill-button-secondary" : "pill-button-primary";
-
+function SiteFooter({ page }: { page: LandingPage }) {
   return (
-    <a
-      href={href}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noreferrer" : undefined}
-      className={`${buttonClassName} cta-button-fixed min-h-12 justify-center ${className}`}
-      onClick={() => {
-        if (variant === "secondary") {
-          trackSecondaryCtaClick(location);
-        } else {
-          trackPrimaryCtaClick(location);
-        }
-      }}
+    <footer className="border-t border-brand-border bg-brand-surface-2">
+      <SectionShell className="py-16 md:py-20">
+        <div className="grid gap-10 md:grid-cols-[2fr_1fr] md:items-end">
+          <div>
+            <h2 className="font-display text-3xl font-semibold leading-tight text-brand-text md:text-4xl">
+              {page.finalCta.heading}
+            </h2>
+            <p className="mt-3 max-w-xl text-base leading-7 text-brand-muted">
+              {page.finalCta.subheading}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button label={page.finalCta.primaryCta.label} href={page.finalCta.primaryCta.href} />
+              <Button
+                label={page.finalCta.secondaryCta.label}
+                href={page.finalCta.secondaryCta.href}
+                variant="secondary"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 text-sm text-brand-text md:items-end">
+            <a
+              href={page.phoneHref}
+              className="font-semibold underline underline-offset-4 transition hover:text-brand-primary"
+            >
+              Call {page.phoneDisplay}
+            </a>
+            <span className="text-brand-muted">
+              One piece is fine. Twenty is fine. We print in FDM, resin, SLS, and TPU.
+            </span>
+          </div>
+        </div>
+        <div className="mt-10 flex flex-col gap-2 border-t border-brand-border pt-6 text-xs text-brand-muted md:flex-row md:items-center md:justify-between">
+          <span>(c) {new Date().getFullYear()} {page.businessName}. Built in Kinston, NC.</span>
+          <span>FDM, resin, TPU, SLS, and the materials between.</span>
+        </div>
+      </SectionShell>
+    </footer>
+  );
+}
+
+function HeroSection({ page }: { page: LandingPage }) {
+  return (
+    <section
+      id="top"
+      className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-20 md:grid-cols-12 md:gap-12 md:px-10 md:py-28"
     >
-      {label}
-    </a>
-  );
-}
-
-function HeroVisual() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % heroCarouselImages.length);
-    }, 4200);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="hero-media">
-      <div className="hero-media__main">
-        {heroCarouselImages.map((image, index) => (
-          <Image
-            key={image.src}
-            src={image.src}
-            alt={image.alt}
-            fill
-            sizes="(max-width: 1023px) 100vw, 52vw"
-            className={`object-cover object-[50%_44%] transition-opacity duration-1000 ease-in-out ${
-              activeIndex === index ? "opacity-100" : "opacity-0"
-            }`}
-            priority={index === 0}
+      <div className="md:col-span-5">
+        <h1 className="font-display text-4xl font-semibold leading-[1.05] text-brand-text md:text-[3.4rem] md:leading-[1.04]">
+          {page.hero.heading}
+        </h1>
+        <p className="mt-6 max-w-xl text-base leading-7 text-brand-muted md:text-lg">
+          {page.hero.subheading}
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Button label={page.hero.primaryCta.label} href={page.hero.primaryCta.href} />
+          <Button
+            label={page.hero.secondaryCta.label}
+            href={page.hero.secondaryCta.href}
+            variant="secondary"
           />
-        ))}
-        <div className="hero-media__overlay" />
+        </div>
       </div>
-    </div>
+      <div className="md:col-span-7">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-brand-border bg-brand-surface shadow-[0_24px_50px_rgba(0,0,0,0.12)]">
+          <img
+            src={page.hero.image.src}
+            alt={page.hero.image.alt}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </div>
+      </div>
+    </section>
   );
 }
 
-export function HeroSectionView({ section }: { section: HeroSection }) {
+function ProblemSection({ page }: { page: LandingPage }) {
   return (
-    <SectionShell id="top">
-      <div className="grid gap-10 lg:grid-cols-12 lg:items-center xl:gap-14">
-        <div className="min-w-0 lg:col-span-6">
-          {section.eyebrow ? <p className="eyebrow">{section.eyebrow}</p> : null}
-          <h1 className="hero-title mt-4 max-w-[20ch] font-display text-5xl leading-[0.95] text-[#1a1a1a] sm:text-6xl lg:text-[4.25rem]">
-            {section.heading}
-          </h1>
-          <p className="mt-6 max-w-3xl text-base leading-8 text-mist md:text-lg">{section.subheading}</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <CtaLink href={section.primaryCta.href} label={section.primaryCta.label} location="hero" />
-            <CtaLink href={section.secondaryCta.href} label={section.secondaryCta.label} variant="secondary" location="hero" />
+    <SectionShell id="problem" className="py-20 md:py-24">
+      <div className="mx-auto max-w-3xl">
+        <h2 className="font-display text-3xl font-semibold leading-tight text-brand-text md:text-4xl">
+          {page.problem.heading}
+        </h2>
+        <p className="mt-6 text-base leading-8 text-brand-muted md:text-lg">
+          {page.problem.copy}
+        </p>
+      </div>
+    </SectionShell>
+  );
+}
+
+function WhyUsSection({ page }: { page: LandingPage }) {
+  return (
+    <SectionShell id="why-us" className="py-20 md:py-24">
+      <div className="mx-auto max-w-3xl">
+        <Eyebrow>WHY US</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-brand-text md:text-4xl">
+          {page.whyUs.heading}
+        </h2>
+        <p className="mt-3 text-base leading-7 text-brand-muted md:text-lg">
+          {page.whyUs.subheading}
+        </p>
+      </div>
+
+      <div className="mt-12 flex flex-col gap-12 md:gap-16">
+        {page.whyUs.rows.map((row, index) => {
+          const imageOnLeft = index % 2 === 0;
+          return (
+            <div
+              key={row.title}
+              className="grid items-center gap-8 md:grid-cols-2 md:gap-12"
+            >
+              {imageOnLeft ? (
+                <>
+                  <div className="order-2 md:order-1">
+                    <div className="aspect-[4/3] overflow-hidden rounded-3xl border border-brand-border bg-brand-surface shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
+                      <img
+                        src={page.whyUs.image.src}
+                        alt={page.whyUs.image.alt}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="order-1 md:order-2">
+                    <h3 className="font-display text-2xl font-semibold leading-tight text-brand-text md:text-3xl">
+                      {row.title}
+                    </h3>
+                    <p className="mt-4 text-base leading-7 text-brand-muted md:text-lg">
+                      {row.copy}
+                    </p>
+                    <ul className="mt-5 space-y-2 text-base leading-7 text-brand-text">
+                      {row.bullets.map((bullet) => (
+                        <li key={bullet} className="flex gap-3">
+                          <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-primary" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="font-display text-2xl font-semibold leading-tight text-brand-text md:text-3xl">
+                      {row.title}
+                    </h3>
+                    <p className="mt-4 text-base leading-7 text-brand-muted md:text-lg">
+                      {row.copy}
+                    </p>
+                    <ul className="mt-5 space-y-2 text-base leading-7 text-brand-text">
+                      {row.bullets.map((bullet) => (
+                        <li key={bullet} className="flex gap-3">
+                          <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-primary" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="aspect-[4/3] overflow-hidden rounded-3xl border border-brand-border bg-brand-surface shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
+                      <img
+                        src={page.whyUs.image.src}
+                        alt={page.whyUs.image.alt}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-12 flex flex-wrap justify-center gap-3">
+        <Button label={page.whyUs.primaryCta.label} href={page.whyUs.primaryCta.href} />
+      </div>
+    </SectionShell>
+  );
+}
+
+function WhatYouGetSection({ page }: { page: LandingPage }) {
+  return (
+    <SectionShell id="what-you-get" className="py-20 md:py-24">
+      <div className="mx-auto max-w-3xl">
+        <Eyebrow>WHAT YOU GET</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-brand-text md:text-4xl">
+          {page.whatYouGet.heading}
+        </h2>
+        <p className="mt-3 text-base leading-7 text-brand-muted md:text-lg">
+          {page.whatYouGet.subheading}
+        </p>
+      </div>
+
+      <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <article className="overflow-hidden rounded-3xl border border-brand-border bg-brand-surface shadow-[0_4px_18px_rgba(0,0,0,0.04)] md:col-span-2">
+          <div className="aspect-[16/10] overflow-hidden bg-brand-surface-2">
+            <img
+              src={page.whatYouGet.leadCard.image.src}
+              alt={page.whatYouGet.leadCard.image.alt}
+              className="h-full w-full object-cover"
+            />
           </div>
-        </div>
-        <div className="min-w-0 lg:col-span-6">
-          <HeroVisual />
-        </div>
-      </div>
-      <div className="hero-proof-strip mt-10 flex flex-wrap justify-center gap-3 lg:mt-12">
-        {section.proofBullets.map((item) => (
-          <div key={item.id} className="proof-pill">
-            {item.label}
+          <div className="p-6 md:p-8">
+            <h3 className="font-display text-2xl font-semibold leading-tight text-brand-text md:text-3xl">
+              {page.whatYouGet.leadCard.title}
+            </h3>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-brand-muted md:text-lg">
+              {page.whatYouGet.leadCard.copy}
+            </p>
           </div>
-        ))}
-      </div>
-    </SectionShell>
-  );
-}
+        </article>
 
-export function ProblemGridSection({ section }: { section: ProblemSection }) {
-  return (
-    <SectionShell id="problem" tone="muted">
-      <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-        <div className="min-w-0 lg:col-span-7">
-          <SectionHeader eyebrow={section.eyebrow} heading={section.heading} copy={section.copy} />
-        </div>
-        <div className="section-image-card section-image-card--dark aspect-[4/3] min-w-0 overflow-hidden lg:col-span-5">
-          <Image
-            src="/products/tpu-lattice-cad.webp"
-            alt="CAD lattice visualization showing advanced digital O&P fabrication"
-            fill
-            sizes="(max-width: 1023px) 100vw, 34rem"
-            className="object-cover object-center"
-          />
-        </div>
-      </div>
-      <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {section.items.map((item) => (
-          <article key={item.id} className="shared-card">
-            <h3 className="shared-card-title">{item.title}</h3>
-            <p className="shared-card-body">
-              <LinkedText text={item.copy} />
-            </p>
-          </article>
-        ))}
-      </div>
-    </SectionShell>
-  );
-}
-
-export function DifferentiatorsSectionView({ section }: { section: DifferentiatorsSection }) {
-  return (
-    <SectionShell id="differentiators">
-      <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-        <div className="min-w-0 lg:col-span-7">
-          <SectionHeader eyebrow={section.eyebrow} heading={section.heading} copy={section.copy} />
-        </div>
-        <div className="section-image-card section-image-card--dark aspect-[4/3] max-h-[28rem] min-w-0 overflow-hidden lg:col-span-5">
-          <Image
-            src="/products/formlabs-printer-card.jpg"
-            alt="Formlabs selective laser sintering printer used for digital O&P manufacturing"
-            fill
-            sizes="(max-width: 1023px) 100vw, 34rem"
-            className="object-cover object-[50%_37%] md:object-contain md:object-center md:p-6"
-          />
-        </div>
-      </div>
-      <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {section.items.map((item) => (
-          <article key={item.id} className="shared-card">
-            <h3 className="shared-card-title">{item.title}</h3>
-            <p className="shared-card-body">
-              <LinkedText text={item.copy} />
-            </p>
-          </article>
-        ))}
-      </div>
-    </SectionShell>
-  );
-}
-
-export function BenefitsSectionView({ section }: { section: BenefitsSection }) {
-  return (
-    <SectionShell id="benefits" tone="muted">
-      <SectionHeader eyebrow={section.eyebrow} heading={section.heading} />
-      <div className="mt-10 grid gap-5 lg:grid-cols-12 lg:items-stretch">
-        <div className="section-image-card section-image-card--light aspect-[4/5] max-h-[34rem] min-w-0 overflow-hidden lg:col-span-4">
-          <Image
-            src="/products/orthosis-benefits-crop.webp"
-            alt="Custom orthosis product on a white background"
-            fill
-            sizes="(max-width: 1023px) 100vw, 28rem"
-            className="object-contain object-center p-4 md:p-6"
-          />
-        </div>
-        <div className="grid min-w-0 gap-5 md:grid-cols-3 lg:col-span-8">
-          {section.items.map((item) => (
-            <article key={item.id} className="shared-card">
-              <h3 className="shared-card-title">{item.title}</h3>
-              <p className="shared-card-body">
-                <LinkedText text={item.copy} />
-              </p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </SectionShell>
-  );
-}
-
-export function WorkflowSectionView({ section }: { section: WorkflowSection }) {
-  return (
-    <SectionShell id="workflow">
-      <SectionHeader eyebrow={section.eyebrow} heading={section.heading} copy={section.introLine} />
-      <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-4 xl:gap-10">
-        {section.steps.map((step) => (
-          <article key={step.id} className="process-step">
-            <p className="process-step__label">{step.step}</p>
-            <h3 className="process-step__title">{step.title}</h3>
-            <p className="process-step__body">{step.copy}</p>
-          </article>
-        ))}
-      </div>
-    </SectionShell>
-  );
-}
-
-export function ProofSectionView({ section }: { section: ProofSection }) {
-  return (
-    <SectionShell id="proof" compact tone="muted">
-      <SectionHeader eyebrow={section.eyebrow} heading={section.heading} />
-      <div className="mt-10 grid gap-5 lg:grid-cols-2">
-        <div className="section-image-card section-image-card--light aspect-[16/10] overflow-hidden">
-          <Image
-            src="/products/mjf-elbow-capability.webp"
-            alt="Raw MJF elbow fabrication component"
-            fill
-            sizes="(max-width: 1023px) 100vw, 40rem"
-            className="object-cover object-center"
-          />
-        </div>
-        <div className="section-image-card section-image-card--light aspect-[16/10] overflow-hidden">
-          <Image
-            src="/products/flexible-liner-product.webp"
-            alt="Flexible liner product photography"
-            fill
-            sizes="(max-width: 1023px) 100vw, 40rem"
-            className="object-cover object-center"
-          />
-        </div>
-      </div>
-      <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {section.items.map((item) => (
-          <article key={item.id} className="proof-card">
-            <h3 className="shared-card-title">{item.label}</h3>
-          </article>
-        ))}
-      </div>
-    </SectionShell>
-  );
-}
-
-export function FaqSectionView({ section }: { section: FaqSection }) {
-  return (
-    <SectionShell id="faq">
-      <SectionHeader eyebrow="Frequently Asked Questions" heading={section.heading} />
-      <div className="mt-10 grid gap-4">
-        {section.items.map((item, index) => (
-          <details
-            key={item.id}
-            className="faq-item group"
-            open={item.openByDefault}
-            onToggle={(event) => {
-              if ((event.currentTarget as HTMLDetailsElement).open) {
-                trackFaqExpand(index + 1);
-              }
-            }}
+        {page.whatYouGet.secondaryCards.map((card) => (
+          <article
+            key={card.title}
+            className="overflow-hidden rounded-3xl border border-brand-border bg-brand-surface shadow-[0_4px_18px_rgba(0,0,0,0.04)] md:col-span-1"
           >
-            <summary className="faq-item__summary">
-              <span>{item.question}</span>
-              <span className="faq-item__indicator" aria-hidden="true">
-                <span className="faq-item__indicator-line faq-item__indicator-line--horizontal" />
-                <span className="faq-item__indicator-line faq-item__indicator-line--vertical group-open:scale-y-0" />
-              </span>
-            </summary>
-            <p className="faq-item__answer">{item.answer}</p>
-          </details>
+            <div className="aspect-[4/3] overflow-hidden bg-brand-surface-2">
+              <img
+                src={card.image.src}
+                alt={card.image.alt}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="p-6">
+              <h3 className="font-display text-xl font-semibold leading-tight text-brand-text md:text-2xl">
+                {card.title}
+              </h3>
+              <p className="mt-3 text-base leading-7 text-brand-muted">
+                {card.copy}
+              </p>
+            </div>
+          </article>
         ))}
       </div>
-    </SectionShell>
-  );
-}
 
-export function FooterCtaSectionView({ section }: { section: FooterCtaSection }) {
-  return (
-    <SectionShell id="footer-cta" compact tone="dark">
-      <div className="max-w-4xl">
-        {section.eyebrow ? <p className="eyebrow text-white/70">{section.eyebrow}</p> : null}
-        <h2 className="section-title mt-4 text-white">{section.heading}</h2>
-        {section.copy ? <p className="section-copy mt-4 max-w-3xl text-white/78">{section.copy}</p> : null}
-      </div>
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <CtaLink href={section.primaryCta.href} label={section.primaryCta.label} location="footer" />
-        <CtaLink
-          href={section.secondaryCta.href}
-          label={section.secondaryCta.label}
-          variant="secondary"
-          location="footer"
-          isExternal={section.secondaryCta.isExternal}
-          className="border-white text-white hover:bg-white/10"
+      <div className="mt-12 flex flex-wrap justify-center gap-3">
+        <Button
+          label={page.whatYouGet.primaryCta.label}
+          href={page.whatYouGet.primaryCta.href}
         />
       </div>
     </SectionShell>
+  );
+}
+
+function HowItWorksSection({ page }: { page: LandingPage }) {
+  return (
+    <SectionShell id="how-it-works" className="py-16 md:py-20">
+      <div className="mx-auto max-w-3xl">
+        <Eyebrow>HOW IT WORKS</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-brand-text md:text-4xl">
+          {page.howItWorks.heading}
+        </h2>
+      </div>
+
+      <ol className="mt-10 grid gap-8 md:grid-cols-2 md:gap-10 xl:grid-cols-4">
+        {page.howItWorks.steps.map((step) => (
+          <li key={step.step} className="rounded-2xl border border-brand-border bg-brand-surface p-6">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand-primary bg-brand-primary/10 font-display text-base font-semibold text-brand-primary">
+              {step.step}
+            </span>
+            <h3 className="mt-4 font-display text-xl font-semibold leading-tight text-brand-text">
+              {step.title}
+            </h3>
+            <p className="mt-2 text-base leading-7 text-brand-muted">
+              {step.copy}
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-12 flex flex-wrap justify-center gap-3">
+        <Button
+          label={page.howItWorks.primaryCta.label}
+          href={page.howItWorks.primaryCta.href}
+        />
+      </div>
+    </SectionShell>
+  );
+}
+
+function ProofSection({ page }: { page: LandingPage }) {
+  return (
+    <SectionShell id="proof" className="py-20 md:py-24">
+      <div className="grid gap-10 md:grid-cols-[3fr_2fr] md:items-center md:gap-12">
+        <div>
+          <Eyebrow>PROOF</Eyebrow>
+          <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-brand-text md:text-4xl">
+            {page.proof.heading}
+          </h2>
+          <p className="mt-3 text-base leading-7 text-brand-muted md:text-lg">
+            {page.proof.subheading}
+          </p>
+          <div className="mt-6 space-y-5 text-base leading-8 text-brand-muted md:text-lg">
+            <p>{page.proof.body}</p>
+          </div>
+          <div className="mt-8">
+            <Button label={page.proof.primaryCta.label} href={page.proof.primaryCta.href} />
+          </div>
+        </div>
+        <figure className="overflow-hidden rounded-3xl border border-brand-border bg-brand-surface shadow-[0_14px_34px_rgba(0,0,0,0.08)]">
+          <div className="aspect-square overflow-hidden bg-brand-surface-2">
+            <img
+              src={page.proof.image.src}
+              alt={page.proof.image.alt}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <figcaption className="border-t border-brand-border bg-brand-surface px-6 py-4 text-sm leading-6 text-brand-muted">
+            {page.proof.caption}
+          </figcaption>
+        </figure>
+      </div>
+    </SectionShell>
+  );
+}
+
+function FaqSection({ page }: { page: LandingPage }) {
+  return (
+    <SectionShell id="faq" className="py-16 md:py-20">
+      <div className="mx-auto max-w-3xl">
+        <Eyebrow>FAQ</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-brand-text md:text-4xl">
+          {page.faq.heading}
+        </h2>
+        <p className="mt-3 text-base leading-7 text-brand-muted md:text-lg">
+          {page.faq.subheading}
+        </p>
+      </div>
+
+      <div className="mx-auto mt-10 flex max-w-3xl flex-col gap-4">
+        {page.faq.items.map((item) => (
+          <FaqEntry key={item.question} question={item.question} answer={item.answer} />
+        ))}
+      </div>
+
+      <div className="mx-auto mt-12 max-w-3xl text-center">
+        <p className="text-base leading-7 text-brand-muted">{page.faq.closingLine}</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <Button label={page.faq.primaryCta.label} href={page.faq.primaryCta.href} />
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+function FinalCtaSection({ page }: { page: LandingPage }) {
+  return (
+    <SectionShell id="final-cta" className="py-24 md:py-32">
+      <div className="mx-auto max-w-3xl text-center">
+        <h2 className="font-display text-4xl font-semibold leading-[1.05] text-brand-text md:text-5xl">
+          {page.finalCta.heading}
+        </h2>
+        <p className="mt-5 text-base leading-7 text-brand-muted md:text-lg">
+          {page.finalCta.subheading}
+        </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Button label={page.finalCta.primaryCta.label} href={page.finalCta.primaryCta.href} />
+          <Button
+            label={page.finalCta.secondaryCta.label}
+            href={page.finalCta.secondaryCta.href}
+            variant="secondary"
+          />
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+export function PageRenderer({ page }: { page: LandingPage }) {
+  return (
+    <div id="top" className="bg-brand-bg text-brand-text">
+      <SiteHeader page={page} />
+      <main>
+        <HeroSection page={page} />
+        <ProblemSection page={page} />
+        <WhyUsSection page={page} />
+        <WhatYouGetSection page={page} />
+        <HowItWorksSection page={page} />
+        <ProofSection page={page} />
+        <FaqSection page={page} />
+        <FinalCtaSection page={page} />
+      </main>
+      <SiteFooter page={page} />
+    </div>
   );
 }

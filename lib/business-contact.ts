@@ -1,6 +1,6 @@
-export const BUSINESS_NAME = "Advanc3D";
+export const BUSINESS_NAME = "Adv3D";
 export const BUSINESS_PHONE_DISPLAY = "(252) 208-9575";
-export const BUSINESS_PHONE_E164 = "+12522089575";
+export const BUSINESS_PHONE_E164 = "+125****9575";
 export const BUSINESS_PHONE_HREF = `tel:${BUSINESS_PHONE_E164}`;
 export const BUSINESS_TIMEZONE = "America/New_York";
 

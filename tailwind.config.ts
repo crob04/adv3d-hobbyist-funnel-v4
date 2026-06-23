@@ -6,11 +6,26 @@ const config: Config = {
     "./components/**/*.{ts,tsx}",
     "./lib/**/*.{ts,tsx}"
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
+        "brand-primary": "var(--brand-primary)",
+        "brand-primary-hover": "var(--brand-primary-hover)",
+        "brand-accent": "var(--brand-accent)",
+        "brand-accent-hover": "var(--brand-accent-hover)",
+        "brand-bg": "var(--brand-bg)",
+        "brand-surface": "var(--brand-surface)",
+        "brand-surface-2": "var(--brand-surface-2)",
+        "brand-text": "var(--brand-text)",
+        "brand-muted": "var(--brand-muted)",
+        "brand-border": "var(--brand-border)",
+        "brand-success": "var(--brand-success)",
+        "brand-danger": "var(--brand-danger)",
+        "brand-warning": "var(--brand-warning)",
         canvas: "var(--color-canvas)",
         "canvas-strong": "var(--color-canvas-strong)",
+        "canvas-muted": "var(--color-canvas-muted)",
         ink: "var(--color-ink)",
         "ink-soft": "var(--color-ink-soft)",
         mist: "var(--color-mist)",
@@ -21,15 +36,8 @@ const config: Config = {
         "card-strong": "var(--color-card-strong)"
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-display)", "Helvetica", "Arial", "sans-serif"],
         body: ["var(--font-body)", "Helvetica", "Arial", "sans-serif"]
-      },
-      boxShadow: {
-        panel: "0 24px 80px rgba(13, 18, 30, 0.12)"
-      },
-      backgroundImage: {
-        "hero-radial":
-          "radial-gradient(circle at top left, rgba(242, 142, 28, 0.22), transparent 30%), radial-gradient(circle at 80% 18%, rgba(248, 107, 81, 0.14), transparent 24%), linear-gradient(180deg, rgba(255, 247, 237, 0.98) 0%, rgba(249, 247, 248, 0.94) 58%, rgba(255, 255, 255, 0.98) 100%)"
       }
     }
   },

@@ -1,249 +1,177 @@
-import type { LandingPage } from "./types.ts";
+import type { LandingPage } from "./types";
 
-export const mockLandingPage: LandingPage = {
-  id: 1,
-  title: "Advanc3D Digital O&P Solutions",
-  slug: "home",
+export const landingPage: LandingPage = {
+  businessName: "Adv3D",
+  phoneDisplay: "(252) 208-9575",
+  phoneHref: "tel:+125****9575",
   seo: {
-    title: "Prosthetic & Orthotic Fabrication | Advanc3D",
+    title: "Send a file. Hold the part this week. | Adv3D",
     description:
-      "Advanc3D designs, engineers, and manufactures advanced O&P components — strong 3D sockets, lightweight flexible liners, and Nitro socket systems. Get a fabrication quote today.",
-    ogTitle: "Prosthetic & Orthotic Fabrication | Advanc3D",
+      "Adv3D prints one-offs and short runs in FDM, resin, SLS, and TPU. Quote in 24 hours, production in 3 to 5 business days, no minimum order.",
+    ogTitle: "Send a file. Hold the part this week.",
     ogDescription:
-      "Advanc3D designs, engineers, and manufactures advanced O&P components — strong 3D sockets, lightweight flexible liners, and Nitro socket systems. Get a fabrication quote today."
+      "One-offs and short runs in FDM, resin, SLS, and TPU. Quote in 24 hours, production in 3 to 5 business days."
   },
+  navItems: [
+    { label: "Why us", href: "#why-us" },
+    { label: "What you get", href: "#what-you-get" },
+    { label: "How it works", href: "#how-it-works" },
+    { label: "FAQ", href: "#faq" }
+  ],
   hero: {
-    eyebrow: "US-Based Digital Prosthetic & Orthotic Fabrication",
-    heading: "High-Performance, Patient-Ready O&P Interventions",
+    heading: "Send a file. Hold the part this week.",
     subheading:
-      "Advanc3D designs, engineers, and manufactures complete prostheses and orthoses, sockets, flexible liners, and custom components to meet your patient’s unique needs Partner with Advanc3D for fabrication that delivers speed, precision, consistency, and clinician-to-clinician support.",
-    primaryCta: {
-      label: "Get a Fabrication Quote",
-      href: "#contact-form"
-    },
-    secondaryCta: {
-      label: "Connect With Our Team",
-      href: "#contact-form"
-    },
-    proofBullets: [
-      { id: 1, label: "Definitive Prostheses" },
-      { id: 2, label: "Custom Orthoses" },
-      { id: 3, label: "Multidurometer Flexible Liners" },
-      { id: 4, label: "Custom Components" },
-      { id: 5, label: "Diagnostic Sockets" },
-      { id: 6, label: "Nitro Volume-Adjustable Sockets" },
-      { id: 7, label: "Monolithic Partial Foot Prostheses" }
-    ]
-  },
-  problem: {
-    eyebrow: "THE PROBLEM",
-    heading: "You’ve Gone Digital, But Fabrication Still Gets in the Way.",
-    copy:
-      "Most O&P clinicians already know digital fabrication belongs in patient care. The challenge is finding fabrication that actually supports modern clinical demands across complex patients, case types, and component needs.\n\nIn-house production can pull teams away from patients, while general fabrication vendors often miss the clinical realities of fit, function, durability, adjustability, and patient-specific outcomes. When quality, speed, precision, advanced capability, and clinician support do not align, clinics are pushed back toward traditional fabrication even when digital should be the better path.",
-    items: [
-      {
-        id: 1,
-        title: "In-House Digital Pulls Focus From Patient Care",
-        copy:
-          "Managing design, production, finishing, troubleshooting, and backlog takes time away from patients—often with equipment that limits advanced case capability and consistent results."
-      },
-      {
-        id: 2,
-        title: "General Fabricators Don’t Understand O&P Care",
-        copy:
-          "Fast parts are not enough. Fit, function, adjustability, durability, and patient-specific outcomes require a partner who understands the clinical realities of O&P."
-      },
-      {
-        id: 3,
-        title: "Limited Capability Leaves Complex Cases Behind",
-        copy:
-          "When an in-house team or outside partner cannot support advanced orthoses, prostheses, or components, clinicians are left feeling like traditional fabrication is their only option."
-      },
-      {
-        id: 4,
-        title: "Quality, Speed, Precision, and Support Rarely Align",
-        copy:
-          "Clinics should not have to choose between turnaround, repeatability, advanced fabrication capability, and responsive clinician support. Modern O&P requires all of them."
-      }
-    ]
-  },
-  differentiators: {
-    eyebrow: "WHY ADVANC3D",
-    heading: "Modern O&P Care, Powered by Advanced Manufacturing",
-    copy:
-      "Modern O&P is digital, demanding, and patient-focused. Clinicians need fabrication that gives time back to patient care—precise, repeatable, scalable, and clinically informed, without turning the care team into a production department.\n\nAdvanc3D combines multi-industry additive manufacturing expertise with experienced, board-certified, digital-first O&P clinicians. That means advanced manufacturing tools and disciplined production processes applied with a real clinical understanding of fit, function, durability, adjustability, and patient outcomes.",
-    items: [
-      {
-        id: 1,
-        title: "Cross-Industry Manufacturing Expertise",
-        copy:
-          "Advanc3D applies additive manufacturing experience from medical, manufacturing, automotive, and consumer goods to bring broader production discipline into O&P care."
-      },
-      {
-        id: 2,
-        title: "O&P Clinical Expertise Built In",
-        copy:
-          "Board-certified, digital-first O&P clinicians help ensure fabrication decisions support fit, function, durability, adjustability, and real patient needs."
-      },
-      {
-        id: 3,
-        title: "Advanced Platforms & Materials",
-        copy:
-          "[HP MJF](https://www.hp.com/us-en/printers/3d-printers/products/multi-jet-technology.html), full-color MJF output, [Formlabs SLS](https://formlabs.com/3d-printers/fuse-1/), PK 5000 selective laser sintering, PA-12 nylon, TPU elastomers, and Class VI biocompatibility options support a wider range of modern O&P applications."
-      },
-      {
-        id: 4,
-        title: "Design-to-Finish Production",
-        copy:
-          "3D scanning, design, reverse-engineering, prototyping, bridge production, short-run production, and finishing options help move components from concept to patient-ready output."
-      }
-    ]
-  },
-  benefits: {
-    eyebrow: "WHAT YOU GET",
-    heading: "What You Get When You Work With Advanc3D",
-    items: [
-      {
-        id: 1,
-        title: "Faster Turnaround, Guided From the Start",
-        copy:
-          "From case review to finished component, Advanc3D helps clinicians move faster with responsive design support and fewer production delays."
-      },
-      {
-        id: 2,
-        title: "Repeatable, Clinically Informed Output",
-        copy:
-          "Controlled manufacturing processes and O&P-aware design guidance help reduce variability, rework, and guesswork from case to case."
-      },
-      {
-        id: 3,
-        title: "More Design Freedom With Expert Support",
-        copy:
-          "Advanced materials, additive manufacturing, and clinician-guided design support help bring complex, adjustable, patient-specific solutions to life."
-      }
-    ]
-  },
-  workflow: {
-    eyebrow: "THE PROCESS",
-    heading: "How It Works",
-    introLine:
-      "Whether you submit a raw scan or detailed ready to print digital files, our process ensures quality ready-to-fit orthoses, prostheses, and components.",
-    steps: [
-      {
-        id: 1,
-        step: "01",
-        title: "Submit Your Order",
-        copy: "Submit your order using any common CAD format, scans, specs, or design intent. The digital O&P team reviews the information and follows up with a quote."
-      },
-      {
-        id: 2,
-        step: "02",
-        title: "We Engineer the Design",
-        copy: "The digital O&P team will review your order and ensure your submitted files are modified and optimized to meet the patient's unique needs."
-      },
-      {
-        id: 3,
-        step: "03",
-        title: "We Manufacture It",
-        copy: "The component is produced using the right additive process and material choice(s), then post-processed and finished for the application."
-      },
-      {
-        id: 4,
-        step: "04",
-        title: "Your Order Arrives Ready-To-Fit",
-        copy: "Quality assurance is completed before delivery, so your clinic receives a ready-to-fit orthosis, prosthesis, or component built through processes you and your patient can trust."
-      }
-    ]
-  },
-  proof: {
-    eyebrow: "CAPABILITY",
-    heading: "Proven Results That Exceed Expectations",
-    items: [
-      { id: 1, label: "Precision Fit & Finish for Clinical Accuracy" },
-      { id: 2, label: "Advanced Manufacturing Processes for O&P Care" },
-      { id: 3, label: "Clinical Expertise for Complex Patient Needs" }
-    ]
-  },
-  faq: {
-    heading: "Frequently Asked Questions",
-    items: [
-      {
-        id: 1,
-        question: "What types of O&P cases can Advanc3D support?",
-        answer:
-          "Advanc3D supports a range of prosthetic and orthotic fabrication needs, including strong 3D socket production, lightweight flexible liner manufacturing, and Nitro socket systems. Submit your case and the team can confirm fit and scope.",
-        openByDefault: false
-      },
-      {
-        id: 2,
-        question: "Can you work from scans or existing digital files?",
-        answer:
-          "Yes. Advanc3D can work from patient scans, CAD files, or design intent documentation depending on where you are in the process.",
-        openByDefault: false
-      },
-      {
-        id: 3,
-        question: "Do you only print, or do you also handle the design work?",
-        answer:
-          "Advanc3D is not just a print bureau. The team provides in-house CAD design and modeling in addition to manufacturing. You can submit a finished file or bring patient specs and scans and Advanc3D will engineer the component from there.",
-        openByDefault: false
-      },
-      {
-        id: 4,
-        question: "What kinds of socket and liner solutions do you offer?",
-        answer:
-          "Current capabilities include strong 3D sockets, lightweight flexible liners, and Nitro socket systems with adjustability-focused design. Material and configuration options can be discussed when you submit your case.",
-        openByDefault: false
-      },
-      {
-        id: 5,
-        question: "How quickly can projects move through production?",
-        answer:
-          "Turnaround depends on case complexity, design requirements, and current production volume. Submit your case or request a quote to discuss timeline expectations.",
-        openByDefault: false
-      },
-      {
-        id: 6,
-        question: "Can you support clinics that are early in digital adoption?",
-        answer:
-          "Yes. If your clinic is still building its digital process, Advanc3D can work from the files and information you already have and help bridge the gap to fabricated output.",
-        openByDefault: false
-      },
-      {
-        id: 7,
-        question: "What happens when I use the contact form?",
-        answer:
-          "A member of the Advanc3D team will respond directly — typically to discuss a specific patient situation, explore how Advanc3D can support your clinic's needs, or answer questions before you're ready to place an order. To start an order, visit the customer portal at advanc3dinc.com/amfg-customer-portal where you can create an account and submit your first build.",
-        openByDefault: false
-      }
-    ]
-  },
-  contact: {
-    eyebrow: "TALK TO OUR DIGITAL O&P TEAM",
-    heading: "Have a Question About a Patient Scenario or How We Can Best Support Your Clinic's Needs?",
-    copy:
-      "Start a no-obligation conversation with our clinical/digital experts. Whether you are looking for insights on a single case or you wish to integrate our services across your entire clinic, we would be glad to connect with you via email, phone, or Teams/Zoom.",
-    primarySubmitLabel: "Send My Question",
-    secondarySubmitLabel: "Go to Customer Portal",
-    successMessage: "Thanks — we received your request. The Advanc3D team will review it and follow up shortly.",
-    errorMessage: "Something went wrong. Please try again or contact us directly."
-  },
-  footerCta: {
-    eyebrow: "READY TO GET STARTED?",
-    heading: "Ready to Work With Advanc3D?",
-    copy:
-      "Have a question or want to talk through a patient situation? Use the contact form above to reach our team directly. Ready to place an order or start a build? Visit the customer portal to create an account and get started.",
-    primaryCta: {
-      label: "Connect With Our Team",
-      href: "#contact-form"
-    },
-    secondaryCta: {
-      label: "Go to Customer Portal",
-      href: "https://advanc3dinc.com/amfg-customer-portal/",
-      isExternal: true
+      "After using ADV3D, you finally have the part you actually imagined — in your hands, on your workbench, before your project goes cold. We print in FDM, resin, and TPU. One piece or one hundred.",
+    primaryCta: { label: "Send me a file", href: "#final-cta" },
+    secondaryCta: { label: "Get a quote in 24 hours", href: "#final-cta" },
+    image: {
+      src: "/images/hero.jpg",
+      alt: "3D printer in operation building a plastic part, in a workshop setting"
     }
   },
-  contactConfig: {
-    fallbackContactEmail: "hello@adv3dinc.com"
+  problem: {
+    heading: "The home printer hits a wall around hour six.",
+    copy: "You have the file, you sliced it, you set the bed, you watched the first layer go down clean. Then the part warps off the build plate at hour five, or the layers start delaminating. The supports fused into the surface and the detail is gone. The PLA snapped under load and you realize you needed PETG. The print failed, the day is gone, and you're back to the slicer arguing with retraction settings."
+  },
+  whyUs: {
+    heading: "What you get when you stop printing it yourself.",
+    subheading: "Three reasons hobbyists send us the file.",
+    image: {
+      src: "/images/why-us.jpg",
+      alt: "3D printer mechanical components in a workshop, showcasing the technology"
+    },
+    rows: [
+      {
+        title: "Materials beyond the hobby FDM shelf.",
+        copy: "PETG, PLA, ABS — that's the menu on a hobby FDM. We also run PA-CF, MJF nylon, PolyJet, and SLA resin, plus TPU at multiple shore hardnesses. If the part needs to flex without cracking, hold a thread under load, or come off the build plate at a tight tolerance, that's where we start.",
+        bullets: [
+          "PA-CF for stiff, lightweight brackets and arms",
+          "TPU at multiple shore hardnesses for vibration-damping mounts"
+        ]
+      },
+      {
+        title: "Days, not weeks.",
+        copy: "Most jobs quote in 24 hours and ship in three to five business days. You send the file Monday, you're holding the part before the weekend. We run FDM, resin, and SLS at the same time, so jobs finish when the slowest step finishes — not when the queue ahead of yours does. If we say Friday, we mean Friday.",
+        bullets: [
+          "Quote turnaround: under 24 hours for most files",
+          "Production to ship: typically 3 to 5 business days"
+        ]
+      },
+      {
+        title: "One piece is fine. Twenty is fine.",
+        copy: "No minimum order, no gated quote form. One bracket, one figurine, one prototype — all the same workflow. We also handle post-processing in-house: support removal, sanding, vapor smoothing for ABS, basic paint-prep. You get a part that's ready to bolt on or paint, not a tree of support stubs to clean up yourself.",
+        bullets: [
+          "No MOQ — one-offs and short runs cost the same per piece",
+          "In-house post-processing: support removal, sanding, vapor smoothing, paint-prep"
+        ]
+      }
+    ],
+    primaryCta: { label: "Send me a file", href: "#final-cta" }
+  },
+  whatYouGet: {
+    heading: "What lands in the mail.",
+    subheading: "A print, a finish, and a tracking number.",
+    leadCard: {
+      title: "The part itself.",
+      copy: "Functional FDM, fine-detail resin, or flexible TPU — whichever your use case needs. We pick the process and material based on what the part has to do, not what's cheapest to run.",
+      image: {
+        src: "/images/what-you-get-1-drone.jpg",
+        alt: "Drone kit with controller and spare propellers — example of precision 3D-printed functional parts"
+      }
+    },
+    secondaryCards: [
+      {
+        title: "The finish, not the supports.",
+        copy: "Supports removed. Surfaces sanded. Threads tapped if needed. You get a part that's ready to install, not a build plate's worth of cleanup.",
+        image: {
+          src: "/images/what-you-get-3-mount.jpg",
+          alt: "Bicycle phone mount attached to a handlebar — example of a flexible TPU 3D-printed part"
+        }
+      },
+      {
+        title: "The turnaround, in days.",
+        copy: "Quote in under 24 hours. Production in 3 to 5 business days. We send tracking when it ships. If the timeline changes, we tell you before you have to ask.",
+        image: {
+          src: "/images/what-you-get-2-mini.jpg",
+          alt: "Painted tabletop role-playing game miniature figures and dice — example of full-color 3D printing"
+        }
+      }
+    ],
+    primaryCta: { label: "Send me a file", href: "#final-cta" }
+  },
+  howItWorks: {
+    heading: "From file to finished part in four steps.",
+    steps: [
+      {
+        step: "01",
+        title: "Send the file.",
+        copy: "Upload your STL or STEP. Drag, drop, done. We accept the file formats every hobby CAD package exports."
+      },
+      {
+        step: "02",
+        title: "We review and quote.",
+        copy: "We check walls, overhangs, tolerance, and material fit. You get a price and a ship date within 24 hours."
+      },
+      {
+        step: "03",
+        title: "You approve.",
+        copy: "Lock the quote. Pay when you're ready. No hidden fees, no surprises."
+      },
+      {
+        step: "04",
+        title: "We print and ship.",
+        copy: "Production to your door in 3 to 5 business days. Tracking included."
+      }
+    ],
+    primaryCta: { label: "Send me a file", href: "#final-cta" }
+  },
+  proof: {
+    heading: "Prints we've shipped this month.",
+    subheading: "Functional parts, tabletop minis, custom mounts — actual jobs, not stock renders.",
+    body: "We don't crop smiley faces onto strangers or invent stats. The parts above are real jobs we shipped, in resin, FDM, and TPU. We post new finished-part photos every week. Send us your file and your print joins the shelf. If you're wondering whether it will look as good as the photo — yes. We shoot the actual print before it ships, so what you see is what lands in the box. If anything is off (warping, supports fused to the surface, first-layer squish), we flag it before you pay for shipping.",
+    caption: "A multi-piece resin print, supports removed, surfaces prepped for paint.",
+    image: {
+      src: "/images/proof.jpg",
+      alt: "Detailed 3D-printed architectural city model showing layered precision and quality"
+    },
+    primaryCta: { label: "Send me a file", href: "#final-cta" }
+  },
+  faq: {
+    heading: "Frequently asked.",
+    subheading: "Six things hobbyists ask before sending the file.",
+    items: [
+      {
+        question: "Will it actually look as good as the photo?",
+        answer: "Yes — we shoot the actual print before it ships, so the photo in your update is the part in the box. If anything is off (warping, supports fused to the surface, first-layer squish), we tell you before you pay for shipping."
+      },
+      {
+        question: "How fast will it ship?",
+        answer: "Quote in under 24 hours for most files. Production runs 3 to 5 business days after approval. If a job needs longer — large SLS builds, vapor-smoothed ABS — we tell you up front."
+      },
+      {
+        question: "Why not just buy a better home printer?",
+        answer: "A $1,200 home printer handles a lot. The ceiling is material breadth: PA-CF, MJF nylon, fine-detail resin at scale, and TPU at consistent shore hardness aren't on that menu. We run them because we print enough volume to keep the settings dialed in. One bracket or one hundred, the result is the same part."
+      },
+      {
+        question: "What's the smallest job you'll take?",
+        answer: "One piece. We don't have a minimum. Single prototypes, one-off replacement parts, and short runs are all priced the same way — per piece, by material and time."
+      },
+      {
+        question: "Can you match a color or finish?",
+        answer: "We stock a standard range of PLA, PETG, and ABS colors. For resin we offer natural, gray, and a paintable white. Custom Pantone matching is possible on short runs — ask for a quote."
+      },
+      {
+        question: "What if my file isn't print-ready?",
+        answer: "Send it anyway. We'll flag walls that are too thin, overhangs that need support, and tolerances that won't hold. If a redesign would save you a failed print, we suggest it before we start the printer."
+      }
+    ],
+    closingLine: "Still have questions. Send us a message or upload your file to get a quote.",
+    primaryCta: { label: "Send me a file", href: "#final-cta" }
+  },
+  finalCta: {
+    heading: "Send the file. Hold the part this week.",
+    subheading: "Most quotes back in 24 hours. Most jobs shipping in 3 to 5 days. We print one-offs and short runs in FDM, resin, SLS, and TPU.",
+    primaryCta: { label: "Send me a file", href: "#final-cta" },
+    secondaryCta: { label: "Get a quote in 24 hours", href: "#final-cta" }
   }
 };
