@@ -99,6 +99,7 @@ function HeroSection({ page }: { page: LandingPage }) {
       className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-20 md:grid-cols-12 md:gap-12 md:px-10 md:py-28"
     >
       <div className="md:col-span-5">
+        <Eyebrow>Only limited by your imagination</Eyebrow>
         <h1 className="font-display text-4xl font-semibold leading-[1.05] text-brand-text md:text-[3.4rem] md:leading-[1.04]">
           {page.hero.heading}
         </h1>
